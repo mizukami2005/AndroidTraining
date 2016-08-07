@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -14,11 +15,17 @@ import android.widget.TextView;
  * @author keishin.yokomaku
  */
 public class SubActivity extends Activity implements TextWatcher {
+    private static final String FORM_NAME = "text";
+    private TextView textView;
+    private EditText editText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Hint: 状態遷移が何も起こっていない場合は、savedInstanceState は null です
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub);
+        editText = (EditText) findViewById(R.id.Editor);
+        textView = (TextView) findViewById(R.id.SyncedText);
     }
 
     @Override
@@ -34,6 +41,7 @@ public class SubActivity extends Activity implements TextWatcher {
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+        textView.setText(savedInstanceState.getString(FORM_NAME));
     }
 
     /**
@@ -42,6 +50,7 @@ public class SubActivity extends Activity implements TextWatcher {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putString(FORM_NAME, textView.getText().toString());
     }
 
     @Override
